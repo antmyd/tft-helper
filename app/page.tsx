@@ -73,13 +73,13 @@ export default function Home() {
           <div className="flex items-center justify-center gap-3 mb-4">
             <Swords className="text-tft-gold" size={40} />
             <h1 className="text-4xl font-bold bg-gradient-to-r from-tft-gold to-tft-blue bg-clip-text text-transparent">
-              TFT Helper
+              TFT Item Comp Builder
             </h1>
             <Zap className="text-tft-blue" size={40} />
           </div>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Get optimal Teamfight Tactics compositions based on your items.
-            PC-optimized for quick in-game decisions.
+            Build optimal Teamfight Tactics compositions based on your items.
+            Real-time recommendations with augment synergies and elo-based filtering.
           </p>
         </header>
 

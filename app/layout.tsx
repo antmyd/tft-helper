@@ -13,12 +13,25 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TFT Helper",
-  description: "Get optimal Teamfight Tactics compositions based on your items. PC-optimized for quick in-game decisions.",
+  title: "TFT Item Comp Builder | Teamfight Tactics Composition Optimizer",
+  description: "Build optimal TFT compositions based on your items. Real-time recommendations with augment synergies and elo-based filtering. PC-optimized for competitive play.",
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",
     apple: "/icon.svg",
+  },
+  metadataBase: new URL("https://tftitemguide.vercel.app"),
+  openGraph: {
+    title: "TFT Item Comp Builder | Teamfight Tactics Composition Optimizer",
+    description: "Build optimal TFT compositions based on your items. Real-time recommendations with augment synergies and elo-based filtering.",
+    url: "https://tftitemguide.vercel.app",
+    siteName: "TFT Item Comp Builder",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TFT Item Comp Builder | Teamfight Tactics Composition Optimizer",
+    description: "Build optimal TFT compositions based on your items. Real-time recommendations with augment synergies.",
   },
 };
 
