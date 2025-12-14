@@ -51,6 +51,14 @@ export function CompDisplay({
                 {rec.score}
               </div>
               <div className="text-sm text-gray-400">Match Score</div>
+              {rec.augmentSynergy !== undefined && (
+                <div className="mt-2">
+                  <div className="text-lg font-bold text-purple-400">
+                    {rec.augmentSynergy}%
+                  </div>
+                  <div className="text-xs text-gray-400">Augment Synergy</div>
+                </div>
+              )}
             </div>
           </div>
 

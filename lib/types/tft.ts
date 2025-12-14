@@ -20,6 +20,8 @@ export interface TFTComp {
   units: string[];
   traits: string[];
   description: string;
+  preferredAugments?: string[]; // augment IDs
+  eloTier?: EloTier; // "diamond+" for high elo meta, "casual" for easier comps
 }
 
 export interface CompRecommendation {
@@ -27,6 +29,7 @@ export interface CompRecommendation {
   score: number;
   matchItems: string[]; // matched item IDs
   pivotAdvice: string;
+  augmentSynergy?: number; // 0-100 score for augment compatibility
 }
 
 export interface UserSelection {
@@ -34,3 +37,14 @@ export interface UserSelection {
   augment?: string;
   patch: string;
 }
+
+export interface TFTAugment {
+  id: string;
+  name: string;
+  icon: string;
+  tier: 1 | 2 | 3; // Silver, Gold, Prismatic
+  description: string;
+  synergies?: string[]; // comp IDs that work well with this augment
+}
+
+export type EloTier = "casual" | "diamond+";

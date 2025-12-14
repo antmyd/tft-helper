@@ -1,0 +1,112 @@
+import { TFTAugment } from "@/lib/types/tft";
+
+export const TFT_AUGMENTS: TFTAugment[] = [
+  // Silver (Tier 1)
+  {
+    id: "combat-training",
+    name: "Combat Training",
+    icon: "⚔️",
+    tier: 1,
+    description: "Your units gain 1% Attack Damage per round",
+    synergies: ["gunslinger-freljord"],
+  },
+  {
+    id: "spell-weaver",
+    name: "Spell Weaver",
+    icon: "🔮",
+    tier: 1,
+    description: "Your units gain 1 Ability Power per round",
+    synergies: [],
+  },
+  {
+    id: "tank-up",
+    name: "Tank Up",
+    icon: "🛡️",
+    tier: 1,
+    description: "Your units gain 1% max Health per round",
+    synergies: [],
+  },
+  {
+    id: "money-money",
+    name: "Money Money!",
+    icon: "💰",
+    tier: 1,
+    description: "Gain 2 gold per round",
+    synergies: [],
+  },
+  // Gold (Tier 2)
+  {
+    id: "emperor-crown",
+    name: "Emperor Crown",
+    icon: "👑",
+    tier: 2,
+    description: "Gain an Emperor Emblem and +1 team size",
+    synergies: ["emperor-comp", "emperor-rush"],
+  },
+  {
+    id: "eternal-crown",
+    name: "Eternal Crown",
+    icon: "💎",
+    tier: 2,
+    description: "Gain an Eternal Emblem and +1 team size",
+    synergies: ["eternal-freljord", "emperor-comp"],
+  },
+  {
+    id: "freljord-crown",
+    name: "Freljord Crown",
+    icon: "❄️",
+    tier: 2,
+    description: "Gain a Freljord Emblem and +1 team size",
+    synergies: ["gunslinger-freljord", "eternal-freljord"],
+  },
+  {
+    id: "golden-ticket",
+    name: "Golden Ticket",
+    icon: "🎫",
+    tier: 2,
+    description: "Each Shop refresh has a 40% chance to be free",
+    synergies: [],
+  },
+  {
+    id: "windfall",
+    name: "Windfall",
+    icon: "💨",
+    tier: 2,
+    description: "Gain 20 gold immediately",
+    synergies: [],
+  },
+  // Prismatic (Tier 3)
+  {
+    id: "emperor-soul",
+    name: "Emperor Soul",
+    icon: "⚡",
+    tier: 3,
+    description: "Your team counts as having 2 additional Emperors",
+    synergies: ["emperor-comp"],
+  },
+  {
+    id: "eternal-soul",
+    name: "Eternal Soul",
+    icon: "🌟",
+    tier: 3,
+    description: "Your team counts as having 2 additional Eternals",
+    synergies: ["eternal-freljord", "emperor-comp"],
+  },
+  {
+    id: "level-up",
+    name: "Level Up!",
+    icon: "⬆️",
+    tier: 3,
+    description: "Buy XP with gold instead of using it",
+    synergies: [],
+  },
+  {
+    id: "high-roller",
+    name: "High Roller",
+    icon: "🎲",
+    tier: 3,
+    description: "Gain 3 Loaded Dice. When you use one, gain 2 gold",
+    synergies: [],
+  },
+];
+

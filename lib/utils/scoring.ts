@@ -8,23 +8,48 @@ export class CompScorer {
     this.comps = comps;
   }
 
-  scoreComp(comp: TFTComp, userItems: string[]): number {
+  scoreComp(
+    comp: TFTComp,
+    userItems: string[],
+    selectedAugment?: string | null,
+    eloTier?: "casual" | "diamond+"
+  ): { score: number; augmentSynergy?: number } {
     let score = 0;
 
-    // 1. Core Item Match Score (60%)
+    // 1. Core Item Match Score (50%)
     const itemMatchScore = this.calculateItemMatch(comp, userItems);
-    score += itemMatchScore * 0.6;
+    score += itemMatchScore * 0.5;
 
     // 2. Tier Score (20%)
     const tierScores = { S: 100, A: 80, B: 60, C: 40 };
     score += tierScores[comp.tier] * 0.2;
 
-    // 3. Stage Strength (20%)
+    // 3. Stage Strength (15%)
     const avgStageStrength =
       (comp.strength.early + comp.strength.mid + comp.strength.late) / 3;
-    score += avgStageStrength * 20 * 0.2;
+    score += avgStageStrength * 20 * 0.15;
 
-    return Math.min(100, Math.round(score));
+    // 4. Augment Synergy (10% if augment selected)
+    let augmentSynergy = 0;
+    if (selectedAugment && comp.preferredAugments?.includes(selectedAugment)) {
+      augmentSynergy = 100;
+      score += 10; // Bonus for perfect augment match
+    } else if (selectedAugment) {
+      // Small penalty if augment doesn't match
+      score -= 2;
+    }
+
+    // 5. Elo Filtering (5% adjustment)
+    if (eloTier === "diamond+" && comp.eloTier !== "diamond+") {
+      score -= 5; // Penalty for casual comps in high elo mode
+    } else if (eloTier === "casual" && comp.eloTier === "diamond+") {
+      score -= 3; // Small penalty for high elo comps in casual mode
+    }
+
+    return {
+      score: Math.min(100, Math.max(0, Math.round(score))),
+      augmentSynergy: selectedAugment ? augmentSynergy : undefined,
+    };
   }
 
   private calculateItemMatch(comp: TFTComp, userItems: string[]): number {
@@ -43,12 +68,21 @@ export class CompScorer {
     return totalItems > 0 ? (matchedItems / totalItems) * 100 : 0;
   }
 
-  getRecommendations(userItems: string[], count = 3) {
-    const scoredComps = this.comps.map((comp) => ({
-      comp,
-      score: this.scoreComp(comp, userItems),
-      matchItems: this.getMatchingItems(comp, userItems),
-    }));
+  getRecommendations(
+    userItems: string[],
+    count = 3,
+    selectedAugment?: string | null,
+    eloTier?: "casual" | "diamond+"
+  ) {
+    const scoredComps = this.comps.map((comp) => {
+      const scoring = this.scoreComp(comp, userItems, selectedAugment, eloTier);
+      return {
+        comp,
+        score: scoring.score,
+        matchItems: this.getMatchingItems(comp, userItems),
+        augmentSynergy: scoring.augmentSynergy,
+      };
+    });
 
     return scoredComps
       .sort((a, b) => b.score - a.score)

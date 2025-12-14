@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { ItemPicker } from "@/components/features/ItemPicker";
+import { AugmentPicker } from "@/components/features/AugmentPicker";
+import { TeamCodeShare } from "@/components/features/TeamCodeShare";
 import { CompDisplay } from "@/components/features/CompDisplay";
 import { CompScorer } from "@/lib/utils/scoring";
 import { TFT_COMPOSITIONS } from "@/lib/data/items";
@@ -10,26 +12,57 @@ import { Swords, Zap, RefreshCw } from "lucide-react";
 
 export default function Home() {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [selectedAugment, setSelectedAugment] = useState<string | null>(null);
+  const [eloTier, setEloTier] = useState<"casual" | "diamond+">("casual");
   const [recommendations, setRecommendations] = useState<CompRecommendation[]>(
     []
   );
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSelectionChange = (items: string[]) => {
-    setSelectedItems(items);
-
+  const recalculateRecommendations = (
+    items: string[],
+    augment: string | null,
+    elo: "casual" | "diamond+"
+  ) => {
     if (items.length > 0) {
       setIsLoading(true);
       // Simulate API call delay
       setTimeout(() => {
         const scorer = new CompScorer(TFT_COMPOSITIONS);
-        const recs = scorer.getRecommendations(items, 3);
+        const recs = scorer.getRecommendations(items, 3, augment, elo);
         setRecommendations(recs);
         setIsLoading(false);
       }, 300);
     } else {
       setRecommendations([]);
     }
+  };
+
+  const handleSelectionChange = (items: string[]) => {
+    setSelectedItems(items);
+    recalculateRecommendations(items, selectedAugment, eloTier);
+  };
+
+  const handleAugmentChange = (augment: string | null) => {
+    setSelectedAugment(augment);
+    recalculateRecommendations(selectedItems, augment, eloTier);
+  };
+
+  const handleEloChange = (elo: "casual" | "diamond+") => {
+    setEloTier(elo);
+    recalculateRecommendations(selectedItems, selectedAugment, elo);
+  };
+
+  const handleImport = (data: {
+    items: string[];
+    augment: string | null;
+    patch: string;
+    eloTier: "casual" | "diamond+";
+  }) => {
+    setSelectedItems(data.items);
+    setSelectedAugment(data.augment);
+    setEloTier(data.eloTier);
+    recalculateRecommendations(data.items, data.augment, data.eloTier);
   };
 
   return (
@@ -76,11 +109,48 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Panel - Item Selection */}
           <div className="lg:col-span-1">
-            <div className="sticky top-8">
+            <div className="sticky top-8 space-y-6">
               <ItemPicker onSelectionChange={handleSelectionChange} />
 
+              <AugmentPicker onSelectionChange={handleAugmentChange} />
+
+              <TeamCodeShare
+                items={selectedItems}
+                augment={selectedAugment}
+                patch="16.1"
+                eloTier={eloTier}
+                onImport={handleImport}
+              />
+
+              {/* Elo Filter */}
+              <div className="p-4 bg-tft-card rounded-lg">
+                <h3 className="font-bold text-tft-blue mb-3">Elo Filter</h3>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleEloChange("casual")}
+                    className={`flex-1 px-3 py-2 rounded text-sm font-medium transition-colors ${
+                      eloTier === "casual"
+                        ? "bg-tft-blue text-white"
+                        : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+                    }`}
+                  >
+                    Casual
+                  </button>
+                  <button
+                    onClick={() => handleEloChange("diamond+")}
+                    className={`flex-1 px-3 py-2 rounded text-sm font-medium transition-colors ${
+                      eloTier === "diamond+"
+                        ? "bg-tft-gold text-black"
+                        : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+                    }`}
+                  >
+                    Diamond+
+                  </button>
+                </div>
+              </div>
+
               {/* Patch Info */}
-              <div className="mt-8 p-4 bg-tft-card rounded-lg">
+              <div className="p-4 bg-tft-card rounded-lg">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="font-bold text-tft-blue">Patch Info</h3>
                   <span className="text-xs bg-green-900 px-2 py-1 rounded">
@@ -88,10 +158,13 @@ export default function Home() {
                   </span>
                 </div>
                 <div className="text-sm text-gray-400">
-                  Current Patch: <span className="text-white">14.11</span>
+                  Current Patch: <span className="text-white">16.1</span>
                 </div>
                 <div className="text-xs text-gray-500 mt-2">
                   Data updated: Today, 10:42 AM
+                </div>
+                <div className="text-xs text-gray-600 mt-1">
+                  Auto-updates within 24h of patch release
                 </div>
               </div>
             </div>

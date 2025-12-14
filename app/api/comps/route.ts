@@ -5,7 +5,7 @@ import { CompScorer } from "@/lib/utils/scoring";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { items, augment, patch = "14.11" } = body;
+    const { items, augment, patch = "16.1" } = body;
 
     if (!items || !Array.isArray(items)) {
       return NextResponse.json(
