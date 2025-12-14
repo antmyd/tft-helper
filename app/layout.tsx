@@ -17,9 +17,9 @@ export const metadata: Metadata = {
   description:
     "Build optimal TFT compositions based on your items. Real-time recommendations with augment synergies and elo-based filtering. PC-optimized for competitive play.",
   icons: {
-    icon: "/mylcon.svg",
-    shortcut: "/mylcon.svg",
-    apple: "/mylcon.svg",
+    icon: "/myIcon.svg",
+    shortcut: "/myIcon.svg",
+    apple: "/myIcon.svg",
   },
   metadataBase: new URL("https://tftitemguide.vercel.app"),
   openGraph: {
