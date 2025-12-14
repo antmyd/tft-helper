@@ -14,16 +14,18 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "TFT Item Comp Builder | Teamfight Tactics Composition Optimizer",
-  description: "Build optimal TFT compositions based on your items. Real-time recommendations with augment synergies and elo-based filtering. PC-optimized for competitive play.",
+  description:
+    "Build optimal TFT compositions based on your items. Real-time recommendations with augment synergies and elo-based filtering. PC-optimized for competitive play.",
   icons: {
-    icon: "/icon.svg",
-    shortcut: "/icon.svg",
-    apple: "/icon.svg",
+    icon: "/mylcon.svg",
+    shortcut: "/mylcon.svg",
+    apple: "/mylcon.svg",
   },
   metadataBase: new URL("https://tftitemguide.vercel.app"),
   openGraph: {
     title: "TFT Item Comp Builder | Teamfight Tactics Composition Optimizer",
-    description: "Build optimal TFT compositions based on your items. Real-time recommendations with augment synergies and elo-based filtering.",
+    description:
+      "Build optimal TFT compositions based on your items. Real-time recommendations with augment synergies and elo-based filtering.",
     url: "https://tftitemguide.vercel.app",
     siteName: "TFT Item Comp Builder",
     type: "website",
@@ -31,7 +33,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "TFT Item Comp Builder | Teamfight Tactics Composition Optimizer",
-    description: "Build optimal TFT compositions based on your items. Real-time recommendations with augment synergies.",
+    description:
+      "Build optimal TFT compositions based on your items. Real-time recommendations with augment synergies.",
   },
 };
 
