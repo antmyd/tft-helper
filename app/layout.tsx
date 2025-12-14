@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TFT Helper - Team Composition Guide",
+  title: "TFT Helper",
   description: "Get optimal Teamfight Tactics compositions based on your items. PC-optimized for quick in-game decisions.",
 };
 
